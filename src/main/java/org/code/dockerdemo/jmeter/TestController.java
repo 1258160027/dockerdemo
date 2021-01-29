@@ -29,8 +29,8 @@ public class TestController {
     public void test(){
         String clientId = UUID.randomUUID().toString();
         Boolean lock = redisTemplate.opsForValue().setIfAbsent("lock", clientId,30, TimeUnit.MILLISECONDS);
-        while (!lock){
-            log.info("正在排队~~~");
+        if (!lock){
+            log.info("网络拥挤，请稍后再试~~~");
         }
         try {
             if (lock){
